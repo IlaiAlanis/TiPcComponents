@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Catálogo - PC Components</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="/assets/css/main.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#007BFF', 'hover': '#0069D9' },
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#111111",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "muted-light": "#6B7280",
+                        "muted-dark": "#A0A0A0",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#2D2D2D",
+                        "danger": "#EF4444"
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200">
+    <div class="min-h-screen flex flex-col">
+        <!-- Navbar -->
+        <div id="navbar"></div>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 lg:px-8 py-8">
+            <!-- Breadcrumb -->
+            <div class="mb-6 text-sm text-gray-600 dark:text-gray-400">
+                <a href="/pages/index.html" class="hover:text-primary">Inicio</a>
+                <span class="mx-2">/</span>
+                <span id="breadcrumbCategory">Catálogo</span>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Sidebar Filters -->
+                <aside class="w-full lg:w-1/4 flex-shrink-0">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 sticky top-24">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold">Filtros</h3>
+                            <button onclick="clearFilters()" class="text-sm text-primary hover:text-primary-hover">
+                                Limpiar
+                            </button>
+                        </div>
+
+                        <!-- Categories -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-3 flex items-center">
+                                <span class="material-icons text-primary mr-2">category</span>
+                                Categoría
+                            </h4>
+                            <div class="space-y-2" id="categoryFilters">
+                                <!-- Dynamic categories -->
+                            </div>
+                        </div>
+
+                        <!-- Brands -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-3 flex items-center">
+                                <span class="material-icons text-primary mr-2">business</span>
+                                Marca
+                            </h4>
+                            <div class="space-y-2" id="brandFilters">
+                                <!-- Dynamic brands -->
+                            </div>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-3 flex items-center">
+                                <span class="material-icons text-primary mr-2">attach_money</span>
+                                Precio
+                            </h4>
+                            <div class="space-y-3">
+                                <input type="range" id="priceRange" min="0" max="10000" step="100" value="10000"
+                                       class="w-full h-2 bg-gray-300 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer accent-primary"
+                                       oninput="updatePriceLabel()">
+                                <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+                                    <span>$0</span>
+                                    <span id="priceLabel">$10,000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stock Filter -->
+                        <div class="mb-6">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" id="inStockOnly" class="rounded text-primary focus:ring-primary">
+                                <span class="ml-2">Solo en stock</span>
+                            </label>
+                        </div>
+
+                        <!-- Apply Button -->
+                        <button onclick="applyFilters()" class="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-3 rounded-lg transition-colors">
+                            Aplicar Filtros
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Products Section -->
+                <section class="w-full lg:w-3/4">
+                    <!-- Header -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <div>
+                            <h1 class="text-3xl font-bold" id="pageTitle">Catálogo de Productos</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1" id="resultCount">Cargando productos...</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium">Ordenar:</label>
+                            <select id="sortBy" onchange="applyFilters()" 
+                                    class="rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm focus:border-primary focus:ring-primary">
+                                <option value="newest">Más recientes</option>
+                                <option value="price_asc">Precio: Menor a Mayor</option>
+                                <option value="price_desc">Precio: Mayor a Menor</option>
+                                <option value="name">Nombre A-Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+                        <!-- Dynamic products -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div id="pagination" class="flex justify-center items-center gap-2">
+                        <!-- Dynamic pagination -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <div id="footer"></div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/errorHandler.js"></script>
+    <script src="../../assets/js/api.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/utils.js"></script>
+    <script src="../../assets/js/components.js"></script>
+    <script src="../../assets/js/pages/catalog.js"></script>
+</body>
+</html>
