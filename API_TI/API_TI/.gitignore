@@ -58,14 +58,3 @@ packages/
 temp/
 tmp/
 
-Controllers/
-Middlewares/
-Attributes/
-Swagger/
-Migrations/
-Models/Auth
-Models/DTOs
-Models/ApiResponse
-Models/Pagination
-Services/
-.vs/
